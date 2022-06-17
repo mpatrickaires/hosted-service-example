@@ -13,11 +13,17 @@ namespace HostedServiceExample
         {
             // Notice, through the Console, how the hosted services will be executed before the
             // application has even started. Also, the order in which they are added with the 
-            // AddHostedService will be the order in which each one is executed
+            // AddHostedService will be the order in which each one is executed.
             services.AddHostedService<SingleHostedService>();
             services.AddHostedService<LoopHostedService>();
             services.AddHostedService<TimedHostedService>();
             services.AddHostedService<BackgroundServiceHostedService>();
+
+            // Also, no matter how many times we call AddHostedService for a class, it will
+            // be created only once, having a Singleton behavior.
+            services.AddHostedService<LoopHostedService>();
+            services.AddHostedService<LoopHostedService>();
+            services.AddHostedService<LoopHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
